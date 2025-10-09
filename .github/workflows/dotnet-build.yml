@@ -1,0 +1,49 @@
+name: Build and Publish .NET App
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  load-vars:
+    uses: ./.github/workflows/common-vars.yml
+
+  build:
+    runs-on: windows-latest
+    needs: load-vars
+
+    steps:
+
+      - name: Checkout code 
+        uses: actions/checkout@v4
+        
+      - name: Setup Environment
+        uses: ./.github/actions/setup-environment
+        with:
+          dotnet-version: ${{ needs.load-vars.outputs.dotnet-version }}
+          nuget-version: ${{ needs.load-vars.outputs.nuget-version }}
+
+      - name: Restore dependencies
+        uses: ./.github/actions/restore-dependencies
+        with:
+          solution-path: ${{ needs.load-vars.outputs.solution-path }}
+
+      - name: Build solution
+        uses: ./.github/actions/build-dotnet
+        with:
+          solution-path: ${{ needs.load-vars.outputs.solution-path }}
+          build-config: ${{ needs.load-vars.outputs.build-config }}
+
+      - name: Publish artifacts
+        uses: ./.github/actions/publish-dotnet
+        with:
+          solution-path: ${{ needs.load-vars.outputs.solution-path }}
+          build-config: ${{ needs.load-vars.outputs.build-config }}
+          output-path: ${{ needs.load-vars.outputs.output-path }}
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: ${{ needs.load-vars.outputs.output-path }}
