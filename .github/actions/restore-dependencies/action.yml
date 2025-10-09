@@ -1,0 +1,14 @@
+name: "Restore dependencies"
+description: "Restore NuGet and .NET dependencies"
+inputs:
+  solution-path:
+    description: "Path to the .sln file"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Restore dependencies
+      shell: bash
+      run: |
+        nuget restore ${{ inputs.solution-path }}
+        dotnet restore ${{ inputs.solution-path }} --verbosity detailed
