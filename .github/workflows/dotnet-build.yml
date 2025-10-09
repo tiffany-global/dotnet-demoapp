@@ -7,7 +7,7 @@ on:
 
 jobs:
   load-vars:
-    uses: ./.github/config/common-vars.yml
+    uses: ./.github/workflows/common-vars.yml
 
   build:
     runs-on: windows-latest
@@ -47,4 +47,5 @@ jobs:
         with:
           name: build-artifacts
           path: ${{ needs.load-vars.outputs.output-path }}
+
 
