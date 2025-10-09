@@ -1,4 +1,4 @@
-name: Build and Publish .NET App
+name: Build and Publish .NET app
 
 on:
   push:
@@ -47,5 +47,6 @@ jobs:
         with:
           name: build-artifacts
           path: ${{ needs.load-vars.outputs.output-path }}
+
 
 
