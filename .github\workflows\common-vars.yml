@@ -1,0 +1,33 @@
+name: Common Variables
+
+on:
+  workflow_call:
+    outputs:
+      dotnet-version:
+        description: ".Net Version"
+        value: ${{ jobs.set-vars.outputs.dotnet-version }}
+      nuget-version:
+        description: "Nuget Version"
+        value: ${{ jobs.set-vars.outputs.nuget-version }}
+      solution-path:
+        description: "Path to the .NET solution"
+        value: ${{ jobs.set-vars.outputs.solution-path }}
+      build-config:
+        description: "Build configuration"
+        value: ${{ jobs.set-vars.outputs.build-config }}
+      output-path:
+        description: "Output directory for publish"
+        value: ${{ jobs.set-vars.outputs.output-path }}
+
+jobs:
+  set-vars:
+    runs-on: ubuntu-latest
+    outputs:
+      dotnet-version: "8.0.x"
+      nuget-version: "6.x"
+      solution-path: "dotnet-demoapp.sln"
+      build-config: "Release"
+      output-path: "publish"
+    steps:
+      - name: Set common variables
+        run: echo "Common variables defined"
