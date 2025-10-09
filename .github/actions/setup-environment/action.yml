@@ -1,0 +1,24 @@
+name: "Setup Environment"
+description: "Checkout code, setup .NET SDK, and configure NuGet"
+inputs:
+  dotnet-version:
+    description: ".NET SDK version"
+    required: false
+    default: "8.0.x"
+  nuget-version:
+    description: "NuGet CLI version"
+    required: false
+    default: "6.x"
+runs:
+  using: "composite"
+  steps:
+  
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ inputs.dotnet-version }}
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2
+      with:
+        nuget-version: ${{ inputs.nuget-version }}
