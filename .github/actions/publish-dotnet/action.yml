@@ -1,0 +1,23 @@
+name: "Publish .NET Artifacts"
+description: "Publishes .NET application output to a specified folder"
+inputs:
+  solution-path:
+    description: "Path to the .sln file"
+    required: true
+  build-config:
+    description: "Build configuration (e.g., Release or Debug)"
+    required: false
+    default: "Release"
+  output-path:
+    description: "Output directory for publish"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Publish solution
+      shell: bash
+      run: |
+        dotnet publish ${{ inputs.solution-path }} \
+          --configuration ${{ inputs.build-config }} \
+          --output ${{ inputs.output-path }} \
+          --verbosity detailed
