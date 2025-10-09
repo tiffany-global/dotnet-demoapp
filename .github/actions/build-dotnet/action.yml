@@ -1,0 +1,17 @@
+name: "Build .NET Solution"
+description: "Builds a .NET solution with specified configuration"
+inputs:
+  solution-path:
+    description: "Path to the .sln file"
+    required: true
+  build-config:
+    description: "Build configuration (e.g., Release or Debug)"
+    required: false
+    default: "Release"
+runs:
+  using: "composite"
+  steps:
+    - name: Build solution
+      shell: bash
+      run: |
+        dotnet build ${{ inputs.solution-path }} --configuration ${{ inputs.build-config }} --verbosity detailed
