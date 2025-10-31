@@ -23,7 +23,7 @@ jobs:
   set-vars:
     runs-on: ubuntu-latest
     outputs:
-      dotnet-version: "8.0.x"
+      dotnet-version: ${{ secretes.DOT_NET_VERSION }}
       nuget-version: "6.x"
       solution-path: "dotnet-demoapp.sln"
       build-config: "Release"
