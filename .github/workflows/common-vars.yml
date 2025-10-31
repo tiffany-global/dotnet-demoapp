@@ -21,13 +21,14 @@ on:
 
 jobs:
   set-vars:
+    environment: QA
     runs-on: ubuntu-latest
     outputs:
       dotnet-version: ${{ secrets.DOT_NET_VERSION }}
       nuget-version: "6.x"
       solution-path: "dotnet-demoapp.sln"
       build-config: "Release"
-      output-path: "publish"
+      output-path: ${{ secrets.OUTPUT_PATH }}
     steps:
       - name: Set common variables
         run: echo "Common variables defined"
